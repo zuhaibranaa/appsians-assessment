@@ -6,7 +6,7 @@
             <nav>
                 <ul>
                     <li class="mb-4">
-                        <Link to="/dashbaord" class="block py-2 px-4 rounded hover:bg-gray-700">Dashboard</Link>
+                        <Link to="/dashboard" class="block py-2 px-4 rounded hover:bg-gray-700">Dashboard</Link>
                     </li>
                     <li class="mb-4">
                         <Link to="/employees" class="block py-2 px-4 rounded hover:bg-gray-700">Employees</Link>
