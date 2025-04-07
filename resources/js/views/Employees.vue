@@ -4,11 +4,13 @@ import DataTable from "datatables.net-vue3";
 import DataTablesCore from "datatables.net";
 import Dashboard from "../components/Dashboard.vue";
 import { useEmployeeStore } from "../stores/employeeStore.js";
+import {useDepartmentStore} from "../stores/departmentStore.js";
 
 const employeeStore = useEmployeeStore();
+const departmentStore = useDepartmentStore();
 const isModalOpen = ref(false);
 const isEditing = ref(false);
-const employeeForm = reactive({ id: null, name: "", email: "", phone: "", department: "", joining_date: "" });
+const employeeForm = reactive({ id: null, name: "", email: "", phone: "", department_id: "", joining_date: "" });
 
 DataTable.use(DataTablesCore);
 
@@ -20,13 +22,14 @@ onMounted(() => {
 // Open modal for new employee
 const openModal = () => {
     isEditing.value = false;
-    Object.assign(employeeForm, { id: null, name: "", email: "", phone: "", department: "", joining_date: "" });
+    Object.assign(employeeForm, { id: null, name: "", email: "", phone: "", department_id: "", joining_date: "" });
     isModalOpen.value = true;
 };
 
 // Open modal for editing an employee
 const editEmployee = (employee) => {
     isEditing.value = true;
+    console.log(employee)
     Object.assign(employeeForm, employee);
     isModalOpen.value = true;
 };
@@ -76,7 +79,7 @@ const deleteEmployee = async (employeeId) => {
                 <td>{{ employee.name }}</td>
                 <td>{{ employee.email }}</td>
                 <td>{{ employee.phone }}</td>
-                <td>{{ employee.department }}</td>
+                <td>{{ employee.department.code }}</td>
                 <td>{{ employee.joining_date }}</td>
                 <td class="p-3 flex gap-2">
                     <button
@@ -119,8 +122,10 @@ const deleteEmployee = async (employeeId) => {
 
                 <div class="mb-4">
                     <label class="block text-gray-700">Department</label>
-                    <input v-model="employeeForm.department.name" type="text"
-                           class="w-full p-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" />
+                    <select class="w-full p-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" v-model="employeeForm.department_id">
+                        <option>Select Department</option>
+                        <option :value="department.id" v-for="department in departmentStore.departments" :key="department.id">{{ department.code }}</option>
+                    </select>
                 </div>
 
                 <div class="mb-4">
