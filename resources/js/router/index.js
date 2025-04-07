@@ -18,7 +18,7 @@ const index = createRouter({
     routes,
 });
 index.beforeEach((to, from, next) => {
-    let authStore = JSON.parse(sessionStorage.authStore)
+    let authStore = JSON.parse(sessionStorage?.authStore ?? '{}')
     if (to.meta.requiresAuth && !authStore?.token) {
         // this route requires auth, check if logged in
         // if not, redirect to login page.

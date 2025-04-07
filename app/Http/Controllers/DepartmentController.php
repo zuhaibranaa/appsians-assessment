@@ -3,15 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Models\Department;
+use Illuminate\Routing\Controllers\Middleware;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Controllers\HasMiddleware;
 
-class DepartmentController extends Controller
+class DepartmentController extends Controller implements HasMiddleware
 {
-    public function __construct()
-    {
-        // Only Admin can create, update, delete departments
-        $this->middleware('role:admin')->only(['store', 'update', 'destroy']);
-    }
     /**
      * Display a listing of the resource.
      */
@@ -69,5 +66,13 @@ class DepartmentController extends Controller
         $department->delete();
 
         return response()->json(['message' => 'Department deleted successfully']);
+    }
+
+    public static function middleware()
+    {
+        return [
+            'auth:sanctum',
+            new Middleware('role:admin', only: ['store', 'update', 'destroy']),
+        ];
     }
 }

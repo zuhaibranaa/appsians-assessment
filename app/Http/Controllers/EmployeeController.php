@@ -4,24 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Models\Employee;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Controllers\HasMiddleware;
+use Illuminate\Routing\Controllers\Middleware;
 
-class EmployeeController extends Controller
+class EmployeeController extends Controller implements HasMiddleware
 {
-    public function __construct()
-    {
-        // Admin can create, update, and delete employees
-        $this->middleware('role:admin')->only(['store', 'destroy']);
-
-        // Admin & Manager can update employees
-        $this->middleware('role:admin|manager')->only(['update']);
-
-        // Admin & Manager can view all employees
-        $this->middleware('role:admin|manager')->only(['index']);
-
-        // Employees can only view their own profile
-        $this->middleware('role:employee')->only(['show']);
-    }
-
     /**
      * Display a listing of the resource.
      */
@@ -82,5 +69,15 @@ class EmployeeController extends Controller
     {
         $employee->delete();
         return response()->json(['message' => 'Employee deleted successfully']);
+    }
+
+    public static function middleware()
+    {
+        return [
+            'auth:sanctum',
+            new Middleware('role:admin', only: ['store', 'destroy']),
+            new Middleware('role:admin|manager', only: ['index', 'update']),
+            new Middleware('role:employee', only: ['show']),
+        ];
     }
 }
