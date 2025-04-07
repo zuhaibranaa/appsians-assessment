@@ -55,7 +55,7 @@ const deleteEmployee = async (employeeId) => {
 <template>
     <Dashboard title="Employees">
         <!-- Header -->
-        <div class="bg-white flex justify-between p-4">
+        <div class="bg-white flex justify-between">
             <h2 class="text-xl font-semibold">Manage Employees</h2>
             <button @click="openModal" class="bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-600">
                 New Employee

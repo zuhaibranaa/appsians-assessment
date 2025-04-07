@@ -42,8 +42,8 @@ const deleteDepartment = async (departmentId) => {
 
 <template>
     <Dashboard title="Departments">
-        <div class="flex justify-between bg-white p-4 mb-4 shadow">
-            <h2 class="text-lg font-semibold">Manage Departments</h2>
+        <div class="flex justify-between bg-white">
+            <h2 class="text-xl font-semibold">Manage Departments</h2>
             <button @click="openModal()" class="bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-600">
                 + Add Department
             </button>
