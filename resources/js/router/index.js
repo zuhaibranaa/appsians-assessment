@@ -3,7 +3,7 @@ import Login from '../views/Login.vue';
 import Register from '../views/Register.vue';
 import Dashboard from '../views/Dashboard.vue';
 import Employees from '../views/Employees.vue';
-import Departments from "../views/Departments.vue";
+import Departments from '../views/Departments.vue';
 
 const routes = [
     {path: '/', component: Login},
@@ -13,11 +13,11 @@ const routes = [
     {path: '/departments', component: Departments, meta: {requiresAuth: true}},
 ];
 
-const index = createRouter({
+const router = createRouter({
     history: createWebHistory(),
     routes,
 });
-index.beforeEach((to, from, next) => {
+router.beforeEach((to, from, next) => {
     let authStore = JSON.parse(sessionStorage?.authStore ?? '{}')
     if (to.meta.requiresAuth && !authStore?.token) {
         // this route requires auth, check if logged in
@@ -31,4 +31,4 @@ index.beforeEach((to, from, next) => {
     next()
 })
 
-export default index;
+export default router;

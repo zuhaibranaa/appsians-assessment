@@ -75,9 +75,9 @@ class EmployeeController extends Controller implements HasMiddleware
     {
         return [
             'auth:sanctum',
-            new Middleware('role:admin', only: ['store', 'destroy']),
-            new Middleware('role:admin|manager', only: ['index', 'update']),
-            new Middleware('role:employee', only: ['show']),
+//            'role:admin' => ['only' => ['store', 'destroy']],
+//            'role:admin|manager' => ['only' => ['index', 'update']],
+//            'role:employee' => ['only' => ['show']],
         ];
     }
 }

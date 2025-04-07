@@ -72,7 +72,7 @@ class DepartmentController extends Controller implements HasMiddleware
     {
         return [
             'auth:sanctum',
-            new Middleware('role:admin', only: ['store', 'update', 'destroy']),
+//            'role:admin' => ['only' => ['store', 'update', 'destroy']],
         ];
     }
 }
