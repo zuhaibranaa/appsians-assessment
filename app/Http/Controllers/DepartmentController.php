@@ -7,6 +7,11 @@ use Illuminate\Http\Request;
 
 class DepartmentController extends Controller
 {
+    public function __construct()
+    {
+        // Only Admin can create, update, delete departments
+        $this->middleware('role:admin')->only(['store', 'update', 'destroy']);
+    }
     /**
      * Display a listing of the resource.
      */
