@@ -37,10 +37,13 @@
 </template>
 
 <script setup>
+import {useAuthStore} from "../stores/authStore.js";
+
 import { ref } from "vue";
 import api from "../api"; // We'll create this next
 import { useRouter, RouterLink as Link } from "vue-router";
 
+const authStore = useAuthStore();
 const router = useRouter();
 const email = ref("");
 const password = ref("");
@@ -48,7 +51,8 @@ const password = ref("");
 const login = async () => {
     try {
         const response = await api.post("/login", { email: email.value, password: password.value });
-        localStorage.setItem("token", response.data.token);
+        authStore.setToken(response.data.token)
+        authStore.setUser(response.data.user)
         router.push("/dashboard");
     } catch (error) {
         alert("Login failed");
